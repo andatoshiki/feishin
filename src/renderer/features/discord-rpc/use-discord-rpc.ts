@@ -37,7 +37,7 @@ export const useDiscordRpc = () => {
         const activity: SetActivity = {
             details: currentSong?.name.padEnd(2, ' ') || 'Idle',
             instance: false,
-            largeImageKey: undefined,
+            largeImageKey: currentSong?.imageUrl || 'icon',
             largeImageText: currentSong?.album || 'Unknown album',
             smallImageKey: undefined,
             smallImageText: currentStatus,
@@ -55,18 +55,18 @@ export const useDiscordRpc = () => {
             activity.smallImageKey = 'paused';
         }
 
-        if (
-            currentSong?.serverType === ServerType.JELLYFIN &&
-            discordSettings.showServerImage &&
-            currentSong?.imageUrl
-        ) {
-            activity.largeImageKey = currentSong?.imageUrl;
-        }
+        // if (
+        //     currentSong?.serverType === ServerType.JELLYFIN &&
+        //     discordSettings.showServerImage &&
+        //     currentSong?.imageUrl
+        // ) {
+        //     activity.largeImageKey = currentSong?.imageUrl;
+        // }
 
-        // Fall back to default icon if not set
-        if (!activity.largeImageKey) {
-            activity.largeImageKey = 'icon';
-        }
+        // // Fall back to default icon if not set
+        // if (!activity.largeImageKey) {
+        //     activity.largeImageKey = 'icon';
+        // }
 
         discordRpc?.setActivity(activity);
     }, [currentSong, currentStatus, discordSettings.enableIdle, discordSettings.showServerImage]);
